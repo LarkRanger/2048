@@ -1,3 +1,8 @@
+:root {
+  --board-color: #e45826;
+  --cell-color: #f0a500;
+}
+
 *,
 *::before,
 *::after {
@@ -6,8 +11,67 @@
   box-sizing: border-box;
 }
 
-html,
+html {
+  font-family: 'Nanum Gothic Coding', monospace;
+  width: 100%;
+  height: 100%;
+}
+
 body {
   width: 100%;
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#board {
+  --grid-size: 4;
+  --cell-size: 20vmin;
+  --cell-gap: 1vmin;
+  --cell-border-radius: 1vmin;
+
+  background: var(--board-color);
+  border-radius: var(--cell-border-radius);
+  display: grid;
+  grid-template-columns: repeat(var(--grid-size), var(--cell-size));
+  grid-template-rows: repeat(var(--grid-size), var(--cell-size));
+  gap: var(--cell-gap);
+  padding: var(--cell-gap);
+  position: relative;
+}
+
+.cell {
+  width: 100%;
+  height: 100%;
+  border-radius: var(--cell-border-radius);
+  background-color: var(--cell-color);
+}
+
+.tile {
+  --lightness: 50%;
+  --x: 2;
+  --y: 2;
+
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(var(--cell-size) / 2);
+  width: var(--cell-size);
+  height: var(--cell-size);
+  border-radius: var(--cell-border-radius);
+  background: hsl(47, 50%, var(--background-lightness));
+  left: calc(var(--cell-gap) + var(--x) * (var(--cell-size) + var(--cell-gap)));
+  top: calc(var(--cell-gap) + var(--y) * (var(--cell-size) + var(--cell-gap)));
+  transition: 0.1s ease-in-out;
+  color: hsl(47, 50%, var(--text-lightness));
+  font-weight: 700;
+}
+
+@keyframes enter {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
 }
