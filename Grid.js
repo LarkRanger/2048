@@ -33,6 +33,13 @@ export default class Grid {
     }, []);
   }
 
+  get score() {
+    return this.#cells.reduce((score, cell) => {
+      if (!cell.tile) return score;
+      return Math.max(cell.tile.value, score);
+    }, 0);
+  }
+
   randomEmptyCell() {
     const index = Math.floor(Math.random() * this.#emptyCells.length);
     return this.#emptyCells[index];
@@ -40,6 +47,21 @@ export default class Grid {
 
   mergeTiles() {
     this.#cells.forEach(cell => cell.mergeTiles());
+  }
+
+  updateScore(scoreElement) {
+    const score = this.score;
+    if (score === Number(scoreElement.textContent)) return;
+    const oldScore = document.createElement('div');
+    oldScore.textContent = scoreElement.textContent;
+    oldScore.className = 'throwaway';
+    const x = Math.random() * 20 - 10;
+    const y = Math.random() * 20 - 10;
+    oldScore.style.setProperty('--move-x', `${x}px`);
+    oldScore.style.setProperty('--move-y', `${y}px`);
+    oldScore.addEventListener('animationend', () => oldScore.remove());
+    scoreElement.append(oldScore);
+    scoreElement.textContent = this.score;
   }
 }
 

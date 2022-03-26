@@ -1,6 +1,9 @@
 :root {
   --board-color: #e45826;
   --cell-color: #f0a500;
+  --background-color: #000000;
+  --cell-hue: 47;
+  --text-color: #ffffff;
 }
 
 *,
@@ -23,6 +26,15 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: var(--background-color);
+}
+
+#wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
 }
 
 #board {
@@ -61,17 +73,64 @@ body {
   width: var(--cell-size);
   height: var(--cell-size);
   border-radius: var(--cell-border-radius);
-  background: hsl(47, 50%, var(--background-lightness));
+  background: hsl(var(--cell-hue), 50%, var(--background-lightness));
   left: calc(var(--cell-gap) + var(--x) * (var(--cell-size) + var(--cell-gap)));
   top: calc(var(--cell-gap) + var(--y) * (var(--cell-size) + var(--cell-gap)));
   transition: 0.1s ease-in-out;
-  color: hsl(47, 50%, var(--text-lightness));
+  color: hsl(var(--cell-hue), 50%, var(--text-lightness));
   font-weight: 700;
+  animation: enter 0.1s ease-in-out;
 }
 
 @keyframes enter {
   0% {
     opacity: 0;
     transform: scale(0);
+  }
+}
+
+nav {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 100px;
+  color: var(--text-color);
+}
+
+nav * {
+  color: inherit;
+  font-family: inherit;
+}
+
+.color {
+  font-size: 24px;
+  background-color: transparent;
+  border: none;
+  transition: background-color 0.1s ease-in-out;
+}
+
+.color:hover {
+  background: grey;
+}
+
+#score {
+  position: relative;
+  font-size: 24px;
+  width: 150px;
+  text-align: center;
+}
+
+.throwaway {
+  position: absolute;
+  font-size: inherit;
+  width: inherit;
+  text-align: inherit;
+  animation: throw 1s ease-in-out;
+}
+
+@keyframes throw {
+  100% {
+    transform: translate(var(--move-x), var(--move-y));
+    opacity: 0;
   }
 }
